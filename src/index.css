@@ -3,6 +3,7 @@
 
 @theme {
   --color-primary: #FF0000;
+  --color-secondary: #000B6D;
   --font-family: "Outfit", sans-serif;
 }
 
@@ -24,4 +25,10 @@
 
 ::-webkit-scrollbar {
   @apply hidden;
+}
+
+@media (max-width:740px) {
+  .active p{
+    @apply text-white bg-primary
+  }
 }
