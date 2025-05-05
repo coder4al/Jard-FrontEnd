@@ -1,3 +1,3 @@
 # Jard-FrontEnd
-# 77AFE4-blue 
-# FF0000-red
+# 000B6D-blue-sec 
+# FF0000-red-pri
