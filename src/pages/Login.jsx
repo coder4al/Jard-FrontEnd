@@ -21,7 +21,7 @@ const Login = () => {
     try {
 
       if (state === 'Sign Up') {
-        const {data} = await axios.post(backendUrl + '/api/user/register', {password, name, email})
+        const {data} = await axios.post(backendUrl + '/api/user/register', {name, email, password})
         if (data.success) {
           localStorage.setItem('token', data.token)
           setToken(data.token)
@@ -29,7 +29,7 @@ const Login = () => {
           toast.error(data.message)
         }
       } else{
-        const {data} = await axios.post(backendUrl + '/api/user/login', {password, email})
+        const {data} = await axios.post(backendUrl + '/api/user/login', {email, password})
         if (data.success) {
           localStorage.setItem('token', data.token)
           setToken(data.token)
@@ -45,7 +45,9 @@ const Login = () => {
   };
 
   useEffect(()=>{
-    if (token) {
+    if (state === 'Sign Up' && token) {
+      setState('Login')
+    } else if(token && state === 'Login') {
       navigate('/')
     }
   },[token])
@@ -97,7 +99,7 @@ const Login = () => {
             required
           />
         </div>
-        <button type="submit" className="bg-primary text-white w-full py-2 rounded-md text-base mt-4">
+        <button type="submit" className="bg-primary text-white w-full py-2 rounded-md text-base mt-4 cursor-pointer">
           {state === "Sign Up" ? "Create Account" : "Login"}
         </button>
         {state === "Sign Up" ? (
