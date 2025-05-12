@@ -1,13 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AppContext } from "../context/AppContext";
-import axios from 'axios'
-import {toast} from 'react-toastify'
+import axios from "axios";
+import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-
-  const {backendUrl, token, setToken} = useContext(AppContext)
-  const navigate = useNavigate()
+  const { backendUrl, token, setToken } = useContext(AppContext);
+  const navigate = useNavigate();
 
   const [state, setState] = useState("Sign Up");
 
@@ -19,38 +18,53 @@ const Login = () => {
     event.preventDefault();
 
     try {
-
-      if (state === 'Sign Up') {
-        const {data} = await axios.post(backendUrl + '/api/user/register', {name, email, password})
+      if (state === "Sign Up") {
+        const { data } = await axios.post(backendUrl + "/api/user/register", {
+          name,
+          email,
+          password,
+        });
         if (data.success) {
-          localStorage.setItem('token', data.token)
-          setToken(data.token)
+          sessionStorage.setItem("token", data.token);
+          setToken(data.token);
         } else {
-          toast.error(data.message)
+          toast.error(data.message);
         }
-      } else{
-        const {data} = await axios.post(backendUrl + '/api/user/login', {email, password})
+      } else {
+        const { data } = await axios.post(backendUrl + "/api/user/login", {
+          email,
+          password,
+        });
         if (data.success) {
-          localStorage.setItem('token', data.token)
-          setToken(data.token)
+          sessionStorage.setItem("token", data.token);
+          setToken(data.token);
         } else {
-          toast.error(data.message)
+          toast.error(data.message);
         }
       }
-      
     } catch (error) {
-      toast.error(error.message)
+      toast.error(error.message);
     }
-
   };
 
-  useEffect(()=>{
-    if (state === 'Sign Up' && token) {
-      setState('Login')
-    } else if(token && state === 'Login') {
-      navigate('/')
+  useEffect(() => {
+    if (state === "Sign Up" && token) {
+      setState("Login");
+    } else if (token && state === "Login") {
+      navigate("/");
     }
-  },[token])
+  }, [token]);
+
+  useEffect(() => {
+    const token = sessionStorage.removeItem("token");
+    if (!token) {
+      // No token? Redirect to Create Account or Login page
+      navigate("/login"); // or wherever your signup is
+    } else {
+      // Optionally verify token with backend or decode
+      navigate("/home"); // or dashboard
+    }
+  }, []);
 
   return (
     <form onSubmit={onSubmitHandler} className="min-h-[80vh] flex items-center">
@@ -96,7 +110,10 @@ const Login = () => {
             required
           />
         </div>
-        <button type="submit" className="bg-primary text-white w-full py-2 rounded-md text-base mt-4 cursor-pointer">
+        <button
+          type="submit"
+          className="bg-primary text-white w-full py-2 rounded-md text-base mt-4 cursor-pointer"
+        >
           {state === "Sign Up" ? "Create Account" : "Login"}
         </button>
         {state === "Sign Up" ? (
