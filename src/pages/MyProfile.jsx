@@ -48,9 +48,9 @@ const MyProfile = () => {
           {
             isEdit
             ? <p>
-              <input className="bg-gray-50" onChange={(e) => setUserData(prev => ({...prev, address: {...prev.address, line1: e.target.value}}))} value={userData.address.line1} type="text" />
+              <input className="bg-gray-50" onChange={(e) => setUserData((prev) => ({...prev, address: {...prev.address, line1: e.target.value}}))} value={userData.address?.line1} type="text" />
               <br />
-              <input className="bg-gray-50" onChange={(e) => setUserData(prev => ({...prev, address: {...prev.address, line2: e.target.value}}))} value={userData.address.line2} type="text" />
+              <input className="bg-gray-50" onChange={(e) => setUserData((prev) => ({...prev, address: {...prev.address, line2: e.target.value}}))} value={userData.address?.line2} type="text" />
             </p>
             : <p className="text-gray-500">
               {userData.address.line1}
@@ -67,7 +67,7 @@ const MyProfile = () => {
           <p className="font-medium">Gender:</p>
           {
           isEdit
-          ? <select className="max-w-20 bg-gray-100" onChange={(e) => setUserData(prev => ({...prev, gender: e.target.value}))} value={userData.gender}>
+          ? <select className="max-w-20 bg-gray-100" onChange={(e) => setUserData((prev) => ({...prev, gender: e.target.value}))} value={userData.gender}>
             <option value="Male">Male</option>
             <option value="Female">Female</option>
           </select>
@@ -76,7 +76,7 @@ const MyProfile = () => {
         <p className="font-medium">Birthday:</p>
         {
           isEdit
-          ? <input className="max-w-28 bg-gray-100" type="date" onChange={(e) => setUserData(prev => ({...prev, dob: e.target.value}))} value={userData.dob}/>
+          ? <input className="max-w-28 bg-gray-100" type="date" onChange={(e) => setUserData((prev) => ({...prev, dob: e.target.value}))} value={userData.dob}/>
           : <p className="text-gray-400">{userData.dob}</p>
         }
         </div>
