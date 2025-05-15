@@ -12,7 +12,7 @@ const AppContextProvider = (props) => {
   const [token, setToken] = useState(
     sessionStorage.getItem("token") ? sessionStorage.getItem("token") : false
   );
-  
+
   const [userData, setUserData] = useState();
 
   const getDoctorsData = async () => {
@@ -47,13 +47,14 @@ const AppContextProvider = (props) => {
 
   const value = {
     doctors,
+    getDoctorsData,
     currencySymbol,
     token,
     setToken,
     backendUrl,
     userData,
     setUserData,
-    loadUserProfileData
+    loadUserProfileData,
   };
 
   useEffect(() => {
